@@ -4,6 +4,7 @@ import InputField from '../components/InputField';
 import Button from '../components/Button';
 import { loginApi } from '../api/auth';
 import { validateEmail } from '../utils/validation';
+import CheckBox from 'react-native-check-box';
 
 const LoginScreen = ({ navigation }: any) => {
   const [email, setEmail] = useState('');
@@ -32,9 +33,12 @@ const LoginScreen = ({ navigation }: any) => {
       <InputField label="Email" value={email} onChangeText={setEmail} />
       <InputField label="Password" value={password} onChangeText={setPassword} secureTextEntry={true} />
       <View style={styles.rememberContainer}>
-        <TouchableOpacity onPress={() => setRememberMe(!rememberMe)}>
-          <Text style={[styles.rememberText, rememberMe && styles.rememberTextChecked]}>Remember me</Text>
-        </TouchableOpacity>
+        <CheckBox
+          isChecked={rememberMe}
+          onClick={() => setRememberMe(!rememberMe)}
+          rightText="Remember me"
+          checkBoxColor="#4CAF50"
+        />
         <TouchableOpacity onPress={() => navigation.navigate('Signup')}>
           <Text style={styles.signupText}>Don't have an account? Sign up</Text>
         </TouchableOpacity>
@@ -62,12 +66,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     marginVertical: 10,
-  },
-  rememberText: {
-    color: '#4CAF50',
-  },
-  rememberTextChecked: {
-    fontWeight: 'bold',
+    alignItems: 'center',
   },
   signupText: {
     color: '#007AFF',
