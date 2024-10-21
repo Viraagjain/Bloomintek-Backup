@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import InputField from '../components/InputField';
 import Button from '../components/Button';
 import { signupApi } from '../api/auth';
@@ -11,6 +11,7 @@ const SignupScreen = ({ navigation }: any) => {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState('');
+  const [rememberMe, setRememberMe] = useState(false);
 
   const handleSignup = async () => {
     if (!validateEmail(email)) {
@@ -44,6 +45,14 @@ const SignupScreen = ({ navigation }: any) => {
       <InputField label="Email" value={email} onChangeText={setEmail} />
       <InputField label="Password" value={password} onChangeText={setPassword} secureTextEntry={true} />
       <InputField label="Re-type password" value={confirmPassword} onChangeText={setConfirmPassword} secureTextEntry={true} />
+      <View style={styles.rememberContainer}>
+        <TouchableOpacity onPress={() => setRememberMe(!rememberMe)}>
+          <Text style={[styles.rememberText, rememberMe && styles.rememberTextChecked]}>Remember me</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate('Login')}>
+          <Text style={styles.loginText}>Have an account? Login</Text>
+        </TouchableOpacity>
+      </View>
       {error ? <Text style={styles.error}>{error}</Text> : null}
       <Button title="Sign up" onPress={handleSignup} />
     </View>
@@ -62,6 +71,20 @@ const styles = StyleSheet.create({
   error: {
     color: 'red',
     marginTop: 10,
+  },
+  rememberContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginVertical: 10,
+  },
+  rememberText: {
+    color: '#4CAF50',
+  },
+  rememberTextChecked: {
+    fontWeight: 'bold',
+  },
+  loginText: {
+    color: '#007AFF',
   },
 });
 
